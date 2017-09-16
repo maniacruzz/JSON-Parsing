@@ -60,7 +60,12 @@ def reduce_item(key, value):
     else:
         reduced_item[to_string(key)] = to_string(value)
 
-
+def normal(dic):
+  ret=dict()
+  for key in dic:
+    ret[to_string(key)]=to_string(dic[key])
+  return ret
+  
 if __name__ == "__main__":
     if len(sys.argv) != 4:
         print "\nUsage: python test.py treatments /json_parseer_demo/test.json /json_parseer_demo/test.csv\n"
@@ -83,18 +88,32 @@ if __name__ == "__main__":
         header = []
         for item in data_to_be_processed:
             reduced_item = {}
-            emp_list = []
+            card_list = []
             reduce_item(node, item)
-            print(emp_list)
             header += reduced_item.keys()
             temp_reduced_item=reduced_item
-            
-            for emp in emp_list:
+            temp_processed_data=[]
+            for card in card_list:
+              #print(emp)
               reduced_item={}
-              reduce_item(emp, item)
+              
+              reduce_item("test", card)
+              #print(reduced_item)
               header += reduced_item.keys()
               reduced_item.update(temp_reduced_item)
-              processed_data.append(reduced_item)
+              temp_processed_data.append(reduced_item)
+            #print(temp_processed_data)
+            print(len(treat_list))
+            print(len(temp_processed_data))
+            for t in treat_list:
+              t=normal(t)
+
+              header += t.keys()
+              
+              for d in temp_processed_data:
+                
+                d.update(t)
+                processed_data.append(d)
         header = list(set(header))
         header.sort()
 
